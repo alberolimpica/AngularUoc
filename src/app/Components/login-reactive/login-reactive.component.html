@@ -1,0 +1,12 @@
+<div>
+    <h1>Test app</h1>
+    <form [formGroup] = "loginForm"(ngSubmit) = "checkLogin()">
+        <label>Username: </label>
+        <input type="text" [formControl] = "name"/>
+
+        <label>User password: </label>
+        <input type="password" [formControl] = "password"/>
+        
+        <button type = "submit" [disabled] = "!loginForm.valid">Login</button>
+    </form>
+</div>
