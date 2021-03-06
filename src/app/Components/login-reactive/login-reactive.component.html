@@ -3,10 +3,20 @@
     <form [formGroup] = "loginForm"(ngSubmit) = "checkLogin()">
         <label>Username: </label>
         <input type="text" [formControl] = "name"/>
-
+        
         <label>User password: </label>
         <input type="password" [formControl] = "password"/>
         
         <button type = "submit" [disabled] = "!loginForm.valid">Login</button>
     </form>
 </div>
+
+<span style = "color: red;" *ngIf = "loginForm.get('name').errors && (loginForm.get('name').touched ||loginForm.get('name').dirty)">
+    <span *ngIf = "loginForm.get('name').errors.required"> Username is required</span>
+    <span *ngIf = "loginForm.get('name').errors.minlength || loginForm.get('name').errors.maxlength"> Username must be greater than 8 characters</span>
+</span>
+
+<span style = "color: red;" *ngIf = "loginForm.get('password').errors && (loginForm.get('password').touched ||loginForm.get('password').dirty)">
+    <span *ngIf = "loginForm.get('password').errors.required"> Password is required</span>
+    <span *ngIf = "loginForm.get('password').errors.minlength || loginForm.get('password').errors.maxlength"> Password must be greater than 4 characters</span>
+</span>

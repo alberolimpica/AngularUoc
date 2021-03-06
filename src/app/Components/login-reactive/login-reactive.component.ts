@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { User } from 'src/app/Models/user';
 
 @Component({
@@ -18,8 +18,8 @@ export class LoginReactiveComponent implements OnInit {
   constructor( private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-    this.name = new FormControl("");
-    this.password = new FormControl("");
+    this.name = new FormControl("", [Validators.required, Validators.minLength(8)]);
+    this.password = new FormControl("", [Validators.required, Validators.minLength(4)]);
 
     this.loginForm = this.formBuilder.group({
       name: this.name,
