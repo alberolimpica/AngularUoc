@@ -1,22 +1,37 @@
-<div>
-    <h1>Test app</h1>
+<div class="modal">
+    <h1>Log in</h1>
     <form [formGroup] = "loginForm"(ngSubmit) = "checkLogin()">
-        <label>Username: </label>
-        <input type="text" [formControl] = "name"/>
-        
-        <label>User password: </label>
-        <input type="password" [formControl] = "password"/>
-        
-        <button type = "submit" [disabled] = "!loginForm.valid">Login</button>
+      <div class="container">
+        <div> 
+          <div>
+            <label><b>Username</b></label>
+            <input type="text" placeholder="Enter Username" [formControl] = "name"/>
+          </div>
+          <div>
+            <span style = "color: red;" *ngIf = "loginForm.get('name')!.errors && (loginForm.get('name')!.touched ||loginForm.get('name')!.dirty)">
+              <span *ngIf = "loginForm.get('name')!.hasError('required')"> Username is required</span>
+              <span *ngIf = "loginForm.get('name')!.hasError('minlength')  || loginForm.get('name')!.hasError('maxlength') "> Username must be greater than 4 characters</span>
+            </span>
+          </div>
+        </div>  
+          <div> 
+            <div>
+              <label><b>Password</b></label>
+              <input type="password" placeholder="Enter Password" [formControl] = "password"/>
+            </div>
+            <div>
+              <span style = "color: red;" *ngIf = "loginForm.get('password')!.errors && (loginForm.get('password')!.touched ||loginForm.get('password')!.dirty)">
+                <span *ngIf = "loginForm.get('password')!.hasError('required')"> Password is required</span>
+                <span *ngIf = "loginForm.get('password')!.hasError('minlength') || loginForm.get('password')!.hasError('maxlength') "> Password must be greater than 4 characters</span>
+              </span>
+            </div>
+        </div>  
+        <div>
+          <button type = "submit" placeholder="Enter Password" [disabled] = "!loginForm.valid">Login</button>
+        </div>  
+      </div>
     </form>
 </div>
 
-<span style = "color: red;" *ngIf = "loginForm.get('name')!.errors && (loginForm.get('name')!.touched ||loginForm.get('name')!.dirty)">
-    <span *ngIf = "loginForm.get('name')!.hasError('required')"> Username is required</span>
-    <span *ngIf = "loginForm.get('name')!.hasError('minlength')  || loginForm.get('name')!.hasError('maxlength') "> Username must be greater than 4 characters</span>
-</span>
 
-<span style = "color: red;" *ngIf = "loginForm.get('password')!.errors && (loginForm.get('password')!.touched ||loginForm.get('password')!.dirty)">
-    <span *ngIf = "loginForm.get('password')!.hasError('required')"> Password is required</span>
-    <span *ngIf = "loginForm.get('password')!.hasError('minlength') || loginForm.get('password')!.hasError('maxlength') "> Password must be greater than 4 characters</span>
-</span>
+

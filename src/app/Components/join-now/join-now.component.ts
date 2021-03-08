@@ -5,20 +5,20 @@ import { UserService } from 'src/app/Services/user.service';
 import { MessageService } from 'src/app/Services/message.service';
 
 @Component({
-  selector: 'app-login-reactive',
-  templateUrl: './login-reactive.component.html',
-  styleUrls: ['./login-reactive.component.css']
+  selector: 'app-join-now',
+  templateUrl: './join-now.component.html',
+  styleUrls: ['./join-now.component.css']
 })
-export class LoginReactiveComponent implements OnInit {
-
-  public user: User = new User();
-
+export class JoinNowComponent implements OnInit {
   users:User[] = [];
   
   public name!: FormControl;
   public password!: FormControl;
-  public loginForm!: FormGroup;
+  public isAdmin!: FormControl;
+  public joinNowForm!: FormGroup;
   public isCorectUserAndPass!: boolean;
+
+  public user: User = new User();
 
   constructor( private formBuilder: FormBuilder, private userService: UserService, private messageService: MessageService) { }
 
@@ -26,42 +26,47 @@ export class LoginReactiveComponent implements OnInit {
     this.getUsers();
     this.name = new FormControl("", [Validators.required, Validators.minLength(4)]);
     this.password = new FormControl("", [Validators.required, Validators.minLength(4)]);
+    this.isAdmin = new FormControl("", [Validators.required, Validators.minLength(4)]);
 
-    this.loginForm = this.formBuilder.group({
+    this.joinNowForm = this.formBuilder.group({
       name: this.name,
-      password: this.password
+      password: this.password,
+      isAdmin: this.isAdmin
     });
+  }
+
+  getUsers(): void {
+    this.userService.getUsers().subscribe(users => this.users = users);
   }
 
   public checkLogin(){
     this.user.name = this.name.value;
     this.user.password = this.password.value;
-    
+    this.user.isAdmin = this.isAdmin.value;
+    this.isCorectUserAndPass = false;
+
     this.users.forEach((value) => {
       console.log(value);
-      if(this.user.name == value.name){
-        console.log('This username ' + (value.isAdmin ? "is Admin" : "is not admin"));
+      if(!(this.user.name == value.name)){
         this.isCorectUserAndPass = true;
-        if(value.password == this.user.password){
-          console.log("Password correct")
-          this.isCorectUserAndPass = true;
-        }else{
-          console.log("Password incorrect")
-          this.isCorectUserAndPass = false;
-        }
       }else{
-        this.isCorectUserAndPass = false;
+        console.log("This username already exist")
       }
   });
 
-    if(!this.isCorectUserAndPass){
-      this.messageService.add(`Username or password incorrect`);
-    }
+  if(this.isCorectUserAndPass){
+    console.log("This username doesn't exist, let's create it!")
+        this.add( this.user)
+  }
  
   }
 
-  getUsers(): void {
-    this.userService.getUsers().subscribe(users => this.users = users);
+  add(user: User): void {
+    if (!user) { return; }
+    this.userService.addUser(this.user)
+      .subscribe(user => {
+        this.users.push(user);
+      });
   }
 
 }

@@ -1,0 +1,48 @@
+<div class="modal">
+    <h1>Join now</h1>
+    <form [formGroup] = "joinNowForm"(ngSubmit) = "checkLogin()">
+      <div class="container">
+        <div> 
+          <div>
+            <label><b>Username</b></label>
+            <input type="text" placeholder="Enter Username" [formControl] = "name"/>
+          </div>
+          <div>
+            <span style = "color: red;" *ngIf = "joinNowForm.get('name')!.errors && (joinNowForm.get('name')!.touched ||joinNowForm.get('name')!.dirty)">
+              <span *ngIf = "joinNowForm.get('name')!.hasError('required')"> Username is required</span>
+              <span *ngIf = "joinNowForm.get('name')!.hasError('minlength')  || joinNowForm.get('name')!.hasError('maxlength') "> Username must be greater than 4 characters</span>
+            </span>
+          </div>
+        </div>  
+        <div> 
+          <div>
+            <label><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" [formControl] = "password"/>
+          </div>
+          <div>
+            <span style = "color: red;" *ngIf = "joinNowForm.get('password')!.errors && (joinNowForm.get('password')!.touched ||joinNowForm.get('password')!.dirty)">
+              <span *ngIf = "joinNowForm.get('password')!.hasError('required')"> Password is required</span>
+              <span *ngIf = "joinNowForm.get('password')!.hasError('minlength') || joinNowForm.get('password')!.hasError('maxlength') "> Password must be greater than 4 characters</span>
+            </span>
+          </div>
+        </div>  
+        <div> 
+          <div>
+            <label><b>Type</b></label>
+          </div>
+          <div>
+            <select id="isAdmin" name="isAdmin"  [formControl] = "isAdmin">
+              <option value="true">Admin</option>
+              <option value="false">Tourist</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <button type = "submit" placeholder="Enter Password" [disabled] = "!joinNowForm.valid">Login</button>
+        </div>  
+      </div>
+    </form>
+</div>
+
+
+

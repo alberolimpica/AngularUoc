@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {User} from 'src/app/Models/user'
+import { User } from 'src/app/Models/user'
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -40,6 +40,13 @@ export class UserService {
     return this.http.get<User>(url).pipe(
       tap(_ => this.log(`fetched hero username=${username}`)),
       catchError(this.handleError<User>(`getUser ${username}`))
+    );
+  }
+
+  addUser(user: User): Observable<User> {
+    return this.http.post<User>(this.usersUrl, user, this.httpOptions).pipe(
+      tap((newUser: User) => this.log(`added user w/ username=${newUser.name}`)),
+      catchError(this.handleError<User>('addUser'))
     );
   }
 }
