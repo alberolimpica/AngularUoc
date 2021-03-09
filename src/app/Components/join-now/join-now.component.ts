@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { User } from 'src/app/Models/user';
 import { UserService } from 'src/app/Services/user.service';
-import { MessageService } from 'src/app/Services/message.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-join-now',
@@ -20,7 +20,7 @@ export class JoinNowComponent implements OnInit {
 
   public user: User = new User();
 
-  constructor( private formBuilder: FormBuilder, private userService: UserService, private messageService: MessageService) { }
+  constructor( private formBuilder: FormBuilder, private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
     this.getUsers();
@@ -65,8 +65,11 @@ export class JoinNowComponent implements OnInit {
     if (!user) { return; }
     this.userService.addUser(this.user)
       .subscribe(user => {
+        console.log('Successfully registered');
         this.users.push(user);
+        this.router.navigate(['login']); 
+      }, (err) => {
+        console.error('Error registering', err);
       });
   }
-
 }

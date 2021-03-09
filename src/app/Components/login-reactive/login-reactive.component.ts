@@ -3,6 +3,7 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { User } from 'src/app/Models/user';
 import { UserService } from 'src/app/Services/user.service';
 import { MessageService } from 'src/app/Services/message.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-reactive',
@@ -12,6 +13,7 @@ import { MessageService } from 'src/app/Services/message.service';
 export class LoginReactiveComponent implements OnInit {
 
   public user: User = new User();
+  public userFromDB: User = new User();
 
   users:User[] = [];
   
@@ -20,7 +22,8 @@ export class LoginReactiveComponent implements OnInit {
   public loginForm!: FormGroup;
   public isCorectUserAndPass!: boolean;
 
-  constructor( private formBuilder: FormBuilder, private userService: UserService, private messageService: MessageService) { }
+  constructor( private formBuilder: FormBuilder, private userService: UserService, private messageService: MessageService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.getUsers();
@@ -36,6 +39,8 @@ export class LoginReactiveComponent implements OnInit {
   public checkLogin(){
     this.user.name = this.name.value;
     this.user.password = this.password.value;
+
+    this.isCorectUserAndPass = false;
     
     this.users.forEach((value) => {
       console.log(value);
@@ -43,19 +48,23 @@ export class LoginReactiveComponent implements OnInit {
         console.log('This username ' + (value.isAdmin ? "is Admin" : "is not admin"));
         this.isCorectUserAndPass = true;
         if(value.password == this.user.password){
-          console.log("Password correct")
           this.isCorectUserAndPass = true;
         }else{
-          console.log("Password incorrect")
           this.isCorectUserAndPass = false;
         }
-      }else{
-        this.isCorectUserAndPass = false;
       }
   });
 
     if(!this.isCorectUserAndPass){
       this.messageService.add(`Username or password incorrect`);
+    }else{
+      if(this.user.isAdmin){
+        console.log("Navigatin to admin");
+        this.router.navigate(['adminDashboard']);
+      }else{
+        console.log("Navigatin to user");
+        this.router.navigate(['userDashboard']);
+      }
     }
  
   }
