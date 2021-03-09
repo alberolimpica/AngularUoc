@@ -11,6 +11,7 @@ import { LoginReactiveComponent } from './Components/login-reactive/login-reacti
 import { MessagesComponent } from './Components/messages/messages.component';
 import { AppRoutesModule } from './app-routes.module';
 import { JoinNowComponent } from './Components/join-now/join-now.component';
+import { MenuHeaderComponent } from './Components/menu-header/menu-header.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { JoinNowComponent } from './Components/join-now/join-now.component';
     LoginComponent,
     LoginReactiveComponent,
     MessagesComponent,
-    JoinNowComponent
+    JoinNowComponent,
+    MenuHeaderComponent
   ],
   imports: [
     BrowserModule,
