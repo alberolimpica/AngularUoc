@@ -49,12 +49,13 @@ export class LoginReactiveComponent implements OnInit {
         console.log('This username ' + (value.isAdmin ? "is Admin" : "is not admin"));
         if(value.password == this.user.password){
           this.isCorectUserAndPass = true;
+          this.user = value;
           this.login();
         }else{
           this.isCorectUserAndPass = false;
         }
       }
-  });
+    });
 
     if(!this.isCorectUserAndPass){
       this.messageService.add(`Username or password incorrect`);
@@ -65,7 +66,8 @@ export class LoginReactiveComponent implements OnInit {
   login() {
     this.userService.login(this.name.value, this.password.value)
       .subscribe((resp) => {
-        console.log('Successfully logged in');
+        console.log('Successfully logged in', this.user.id);
+        localStorage.setItem('UserId', "" + this.user.id);
         if(this.user.isAdmin){
           console.log("Navigatin to admin");
           this.router.navigate(['adminDashboard']);

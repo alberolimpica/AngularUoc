@@ -7,6 +7,7 @@ export class UserStoreService {
   constructor() { }
 
   set token(token: string) {
+    console.log("set token ", token);
     this._token = token;
   }
 
@@ -15,6 +16,7 @@ export class UserStoreService {
   }
 
   isLoggedIn() {
+    console.log("isLoggedIn ", this.token);
     return this.token != "";
   }
 

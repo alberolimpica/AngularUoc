@@ -6,6 +6,7 @@ import {UserDashboardComponent} from './Components/user-dashboard/user-dashboard
 import {AdminDashboardComponent} from './Components/admin-dashboard/admin-dashboard.component';
 import { AuthGuard } from './guards/auth.guard';
 import { MainPageComponent } from './Components/main-page/main-page.component';
+import { LogoutComponent } from './Components/logout/logout.component';
 
 
 const appRoutes: Routes = [ 
@@ -14,6 +15,8 @@ const appRoutes: Routes = [
   { path: 'main', component: MainPageComponent },
   { path: 'login', component: LoginReactiveComponent },
   { path: 'register', component: JoinNowComponent },
+  { path: 'logout', component: LogoutComponent,
+  canActivate: [AuthGuard] },
   { path: 'userDashboard', component: UserDashboardComponent,
   canActivate: [AuthGuard] },
   { path: 'adminDashboard', component: AdminDashboardComponent,
