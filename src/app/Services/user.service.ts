@@ -3,6 +3,7 @@ import { User } from 'src/app/Models/user'
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
+import { UserStoreService } from './user-store.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class UserService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  constructor( private http: HttpClient) { }
+  constructor( private http: HttpClient, private userStore: UserStoreService) { }
 
   getUsers():  Observable<User[]> {
     return this.http.get<User[]>(this.usersUrl).pipe(
@@ -44,9 +45,18 @@ export class UserService {
   }
 
   addUser(user: User): Observable<User> {
-    return this.http.post<User>(this.usersUrl, user, this.httpOptions).pipe(
-      tap((newUser: User) => this.log(`added user w/ username=${newUser.name}`)),
+    const url = `${this.usersUrl}/login`;
+    return this.http.post<User>(url, user, this.httpOptions).pipe(
+      tap((newUser: User) => this.log(`added user w/ username=${newUser.name} and id= ${newUser.id}`)),
       catchError(this.handleError<User>('addUser'))
     );
+  }
+
+  login(username: string, password: string): Observable<any> {
+    const url = `${this.usersUrl}/register`;
+    return this.http.post<User>(url, { username, password }, this.httpOptions).pipe(map((resp: any) => {
+      this.userStore.token = resp.token;
+      return resp;
+    }));
   }
 }

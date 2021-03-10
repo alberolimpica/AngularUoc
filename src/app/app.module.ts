@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './Services/in-memory-data.service';
 import { AppRoutingModule } from './app-routing.module';
@@ -13,6 +13,9 @@ import { JoinNowComponent } from './Components/join-now/join-now.component';
 import { MenuHeaderComponent } from './Components/menu-header/menu-header.component';
 import { UserDashboardComponent } from './Components/user-dashboard/user-dashboard.component';
 import { AdminDashboardComponent } from './Components/admin-dashboard/admin-dashboard.component';
+import { AuthGuard } from './guards/auth.guard';
+import { UserStoreService } from './Services/user-store.service';
+import { ActivitiesAppInterceptorService } from './Services/activities-app-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +38,12 @@ import { AdminDashboardComponent } from './Components/admin-dashboard/admin-dash
     ),
     AppRoutesModule
   ],
-  providers: [],
+  providers: [AuthGuard,{
+    provide: HTTP_INTERCEPTORS,
+    useClass: ActivitiesAppInterceptorService,
+    multi: true,
+  }, UserStoreService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

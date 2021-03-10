@@ -4,14 +4,17 @@ import { LoginReactiveComponent } from './Components/login-reactive/login-reacti
 import {JoinNowComponent} from './Components/join-now/join-now.component';
 import {UserDashboardComponent} from './Components/user-dashboard/user-dashboard.component';
 import {AdminDashboardComponent} from './Components/admin-dashboard/admin-dashboard.component';
+import { AuthGuard } from './guards/auth.guard';
 
 
 const appRoutes: Routes = [ 
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginReactiveComponent },
   { path: 'register', component: JoinNowComponent },
-  { path: 'userDashboard', component: UserDashboardComponent },
-  { path: 'adminDashboard', component: AdminDashboardComponent },
+  { path: 'userDashboard', component: UserDashboardComponent,
+  canActivate: [AuthGuard] },
+  { path: 'adminDashboard', component: AdminDashboardComponent,
+  canActivate: [AuthGuard] },
   { path: '**', redirectTo: '/login' },
 ];
 

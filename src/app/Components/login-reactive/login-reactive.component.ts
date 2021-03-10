@@ -4,6 +4,7 @@ import { User } from 'src/app/Models/user';
 import { UserService } from 'src/app/Services/user.service';
 import { MessageService } from 'src/app/Services/message.service';
 import { Router } from '@angular/router';
+import { UserStoreService } from 'src/app/Services/user-store.service';
 
 @Component({
   selector: 'app-login-reactive',
@@ -23,7 +24,7 @@ export class LoginReactiveComponent implements OnInit {
   public isCorectUserAndPass!: boolean;
 
   constructor( private formBuilder: FormBuilder, private userService: UserService, private messageService: MessageService,
-    private router: Router) { }
+    private router: Router, private userStore: UserStoreService) { }
 
   ngOnInit(): void {
     this.getUsers();
@@ -46,9 +47,9 @@ export class LoginReactiveComponent implements OnInit {
       console.log(value);
       if(this.user.name == value.name){
         console.log('This username ' + (value.isAdmin ? "is Admin" : "is not admin"));
-        this.isCorectUserAndPass = true;
         if(value.password == this.user.password){
           this.isCorectUserAndPass = true;
+          this.login();
         }else{
           this.isCorectUserAndPass = false;
         }
@@ -57,17 +58,24 @@ export class LoginReactiveComponent implements OnInit {
 
     if(!this.isCorectUserAndPass){
       this.messageService.add(`Username or password incorrect`);
-    }else{
-      if(this.user.isAdmin){
-        console.log("Navigatin to admin");
-        this.router.navigate(['adminDashboard']);
-      }else{
-        console.log("Navigatin to user");
-        this.router.navigate(['userDashboard']);
-      }
     }
- 
+
+    
   }
+  login() {
+    this.userService.login(this.name.value, this.password.value)
+      .subscribe((resp) => {
+        console.log('Successfully logged in');
+        if(this.user.isAdmin){
+          console.log("Navigatin to admin");
+          this.router.navigate(['adminDashboard']);
+        }else{
+          console.log("Navigatin to user");
+          this.router.navigate(['userDashboard']);
+        }
+      });
+  }
+
 
   getUsers(): void {
     this.userService.getUsers().subscribe(users => this.users = users);
