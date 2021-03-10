@@ -5,17 +5,20 @@ import {JoinNowComponent} from './Components/join-now/join-now.component';
 import {UserDashboardComponent} from './Components/user-dashboard/user-dashboard.component';
 import {AdminDashboardComponent} from './Components/admin-dashboard/admin-dashboard.component';
 import { AuthGuard } from './guards/auth.guard';
+import { MainPageComponent } from './Components/main-page/main-page.component';
 
 
 const appRoutes: Routes = [ 
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/main', pathMatch: 'full' },
+  
+  { path: 'main', component: MainPageComponent },
   { path: 'login', component: LoginReactiveComponent },
   { path: 'register', component: JoinNowComponent },
   { path: 'userDashboard', component: UserDashboardComponent,
   canActivate: [AuthGuard] },
   { path: 'adminDashboard', component: AdminDashboardComponent,
   canActivate: [AuthGuard] },
-  { path: '**', redirectTo: '/login' },
+  { path: '**', redirectTo: '/main' },
 ];
 
 @NgModule({

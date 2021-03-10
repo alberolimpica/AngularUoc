@@ -16,6 +16,7 @@ import { AdminDashboardComponent } from './Components/admin-dashboard/admin-dash
 import { AuthGuard } from './guards/auth.guard';
 import { UserStoreService } from './Services/user-store.service';
 import { ActivitiesAppInterceptorService } from './Services/activities-app-interceptor.service';
+import { MainPageComponent } from './Components/main-page/main-page.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ActivitiesAppInterceptorService } from './Services/activities-app-inter
     JoinNowComponent,
     MenuHeaderComponent,
     UserDashboardComponent,
-    AdminDashboardComponent
+    AdminDashboardComponent,
+    MainPageComponent
   ],
   imports: [
     BrowserModule,
