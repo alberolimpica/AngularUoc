@@ -23,6 +23,7 @@ export class JoinNowComponent implements OnInit {
   constructor( private formBuilder: FormBuilder, private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
+    this.clearLocalStorageData();
     this.getUsers();
     this.name = new FormControl("", [Validators.required, Validators.minLength(4)]);
     this.password = new FormControl("", [Validators.required, Validators.minLength(4)]);
@@ -39,7 +40,12 @@ export class JoinNowComponent implements OnInit {
     this.userService.getUsers().subscribe(users => this.users = users);
   }
 
+  clearLocalStorageData(): void {
+    this.userService.clearLogarStoragedata();
+  }
+
   public checkLogin(){
+    
     this.user.name = this.name.value;
     this.user.password = this.password.value;
     this.user.isAdmin = this.isAdmin.value;

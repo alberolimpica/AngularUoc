@@ -18,6 +18,7 @@ import { UserStoreService } from './Services/user-store.service';
 import { ActivitiesAppInterceptorService } from './Services/activities-app-interceptor.service';
 import { MainPageComponent } from './Components/main-page/main-page.component';
 import { LogoutComponent } from './Components/logout/logout.component';
+import { DataSharingService } from './Services/data-sharing.service';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,7 @@ import { LogoutComponent } from './Components/logout/logout.component';
     provide: HTTP_INTERCEPTORS,
     useClass: ActivitiesAppInterceptorService,
     multi: true,
-  }, UserStoreService,
+  }, UserStoreService,DataSharingService,MenuHeaderComponent,
   ],
   bootstrap: [AppComponent]
 })

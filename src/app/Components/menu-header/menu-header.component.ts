@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {RouterModule} from '@angular/router';
+import { DataSharingService } from 'src/app/Services/data-sharing.service'
 
 @Component({
   selector: 'app-menu-header',
@@ -8,9 +9,24 @@ import {RouterModule} from '@angular/router';
 })
 export class MenuHeaderComponent implements OnInit {
 
-  constructor() { }
+  userType!: string;
+  isUserLoggedIn!: Boolean;
+
+  constructor(public dataSharingService: DataSharingService) { }
 
   ngOnInit(): void {
+    if(!this.isUserLoggedIn){
+      this.userType = "NotLogged"
+      console.log("userType", this.userType)
+    }
+    else{
+      console.log("userType logged")
+      this.userType = "Logged"
+    }
   }
+
+
+
+
 
 }

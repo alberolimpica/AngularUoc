@@ -1,16 +1,16 @@
 <div class="links">
     <span>
-        <a routerLink="/login" routerLinkActive="active">
+        <a *ngIf="dataSharingService.loginStatus==0" routerLink="/login" routerLinkActive="active">
             Login
         </a>
     </span>
     <span>
-        <a routerLink="/register" routerLinkActive="active">
+        <a *ngIf="dataSharingService.loginStatus==0" routerLink="/register" routerLinkActive="active">
             Register
         </a>
     </span>
     <span>
-        <a routerLink="/logout" routerLinkActive="active">
+        <a *ngIf="dataSharingService.loginStatus==1" routerLink="/logout" routerLinkActive="active">
             Logout
         </a>
     </span>

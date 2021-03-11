@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { UserStoreService } from './user-store.service';
+import { DataSharingService } from './data-sharing.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class UserService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  constructor( private http: HttpClient, private userStore: UserStoreService) { }
+  constructor( private http: HttpClient, private userStore: UserStoreService, private dataSharingService: DataSharingService) { }
 
   getUsers():  Observable<User[]> {
     return this.http.get<User[]>(this.usersUrl).pipe(
@@ -55,11 +56,16 @@ export class UserService {
     );
   }
 
-  login(username: string, password: string): Observable<any> {
+  login(user: User): Observable<any> {
     const url = `${this.usersUrl}/login`;
-    return this.http.post<User>(url, { username, password }, this.httpOptions).pipe(map((resp: any) => {
-      this.userStore.token = resp.token;
-      localStorage.setItem("User", `${username}`);
+    const username = user.name;
+    const password = user.password;
+
+    return this.http.post<User>(url, { username, password}, this.httpOptions).pipe(map((resp: any) => {
+      this.userStore.token = "logged";
+      localStorage.setItem("User", `${user.name}`);
+      localStorage.setItem("UserId", `${user.id}`);
+      localStorage.setItem("UserIsAdmin", `${user.isAdmin}`);
       return resp;
     }));
   }
@@ -68,6 +74,7 @@ export class UserService {
     const url = `${this.usersUrl}/login`;
     return this.http.post<User>(url, { user }, this.httpOptions).pipe(map((resp: any) => {
       this.userStore.token = "";
+      this.clearLogarStoragedata();
       return resp;
     }));
   }
@@ -77,6 +84,12 @@ export class UserService {
     return this.http.get<User>(url).pipe(
       tap((newUser: User) => this.log(`Logged user w/ username=${newUser.name} and id= ${newUser.id}`)),
       catchError(this.handleError<User>('addUser')));
+  }
+
+  clearLogarStoragedata(){
+    localStorage.setItem("User","");
+    localStorage.setItem("UserId","");
+    localStorage.setItem("UserIsAdmin", "");
   }
 
 }

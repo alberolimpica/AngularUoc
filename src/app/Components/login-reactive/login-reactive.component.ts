@@ -5,6 +5,8 @@ import { UserService } from 'src/app/Services/user.service';
 import { MessageService } from 'src/app/Services/message.service';
 import { Router } from '@angular/router';
 import { UserStoreService } from 'src/app/Services/user-store.service';
+import { MenuHeaderComponent } from '../menu-header/menu-header.component';
+import { DataSharingService } from 'src/app/Services/data-sharing.service';
 
 @Component({
   selector: 'app-login-reactive',
@@ -24,9 +26,10 @@ export class LoginReactiveComponent implements OnInit {
   public isCorectUserAndPass!: boolean;
 
   constructor( private formBuilder: FormBuilder, private userService: UserService, private messageService: MessageService,
-    private router: Router, private userStore: UserStoreService) { }
+    private router: Router, private userStore: UserStoreService, private dataSharingService: DataSharingService) { }
 
   ngOnInit(): void {
+    this.clearLocalStorageData();
     this.getUsers();
     this.name = new FormControl("", [Validators.required, Validators.minLength(4)]);
     this.password = new FormControl("", [Validators.required, Validators.minLength(4)]);
@@ -64,10 +67,11 @@ export class LoginReactiveComponent implements OnInit {
     
   }
   login() {
-    this.userService.login(this.name.value, this.password.value)
+    this.userService.login(this.user)
       .subscribe((resp) => {
         console.log('Successfully logged in', this.user.id);
         localStorage.setItem('UserId', "" + this.user.id);
+        this.dataSharingService.setLoginStatus(1);
         if(this.user.isAdmin){
           console.log("Navigatin to admin");
           this.router.navigate(['adminDashboard']);
@@ -82,5 +86,10 @@ export class LoginReactiveComponent implements OnInit {
   getUsers(): void {
     this.userService.getUsers().subscribe(users => this.users = users);
   }
+
+  clearLocalStorageData(): void {
+    this.userService.clearLogarStoragedata();
+  }
+
 
 }

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { UserStoreService } from 'src/app/Services/user-store.service';
 import { UserService } from 'src/app/Services/user.service';
 import { User } from 'src/app/Models/user'
+import { DataSharingService } from 'src/app/Services/data-sharing.service';
 
 @Component({
   selector: 'app-logout',
@@ -15,7 +16,7 @@ export class LogoutComponent implements OnInit{
   public id: string = "";
   public userId!: number;
 
-  constructor(private router: Router, private userStore: UserStoreService, private userService: UserService) { }
+  constructor(private router: Router, private userStore: UserStoreService, private userService: UserService, private dataSharingService: DataSharingService) { }
 
   ngOnInit(): void {
     this.getUserLogged()
@@ -35,7 +36,7 @@ export class LogoutComponent implements OnInit{
     this.userService.logout(this.user)
       .subscribe((resp) => {
         console.log('Successfully logged out');
-        localStorage.clear()
+        this.logoutDataSharingService();
         this.router.navigate(['login']);
       });
   }
@@ -46,9 +47,9 @@ export class LogoutComponent implements OnInit{
 
   }
 
+  logoutDataSharingService() {
+    this.dataSharingService.setLoginStatus(0);
+  }
 
-  getUsername() {
-    //return JSON.parse(localStorage.getItem('currentUser')).email;
-}
 
 }
