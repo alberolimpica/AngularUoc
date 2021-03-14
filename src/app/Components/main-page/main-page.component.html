@@ -1,1 +1,19 @@
-<p>main-page works!</p>
+<h1>Activities</h1>
+<div>
+    <div style="float:left; width: 50%;">
+        <h2>Activities list</h2>
+        <ul class="activities">
+            <li *ngFor="let activity of activities" (click) = "onSelect(activity)">
+                <span class="badge">{{activity.id}}</span> {{activity.name}}
+            </li>
+        </ul>
+    </div>
+    <div *ngIf="selectedActivity" style="width: 50%;float:right;">
+        <h2>{{selectedActivity.name | uppercase}} Details</h2>
+        <div><span>id: </span>{{selectedActivity.id}}</div>
+        <div>
+        <label for="activity-name">Activity name: </label>
+        <input id="activity-name" [(ngModel)]="selectedActivity.name" placeholder="name">
+        </div>
+    </div>
+</div>
