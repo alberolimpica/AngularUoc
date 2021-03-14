@@ -74,13 +74,7 @@ export class LoginReactiveComponent implements OnInit {
         console.log('Successfully logged in', this.user.id);
         localStorage.setItem('UserId', "" + this.user.id);
         this.dataSharingService.setLoginStatus(1);
-        if(this.user.isAdmin){
-          console.log("Navigatin to admin");
-          this.router.navigate(['adminDashboard']);
-        }else{
-          console.log("Navigatin to user");
-          this.router.navigate(['userDashboard']);
-        }
+        this.router.navigate(['main']);
       });
   }
 

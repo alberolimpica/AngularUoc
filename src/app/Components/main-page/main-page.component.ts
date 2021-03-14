@@ -13,6 +13,7 @@ export class MainPageComponent implements OnInit {
 
   activities:Activity[] = [];
   selectedActivity?: Activity;
+  favouriteActivities!: string;
 
   constructor(private activitiesService: ActivitiesService, public dataSharingService: DataSharingService) { }
 
@@ -30,9 +31,20 @@ export class MainPageComponent implements OnInit {
   }
 
   isFavourite(activity: Activity): void {
-    console.log(activity.isFavourite);
-    activity.isFavourite ?  activity.isFavourite = false : activity.isFavourite = true;    
-    console.log(activity.isFavourite);
+    this.favouriteActivities = localStorage.getItem("FavouriteActivities")!;
+      
+    if(activity.isFavourite){
+      activity.isFavourite = false;
+      this.favouriteActivities.replace(`[${activity.id}]`, '')
+    }else{
+      activity.isFavourite = true
+      this.favouriteActivities + `[${activity.id}]`;
+    }
+
+    localStorage.setItem("FavouriteActivities", this.favouriteActivities);
+
+    
   }
+
 
 }

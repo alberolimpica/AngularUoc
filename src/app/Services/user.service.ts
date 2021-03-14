@@ -5,6 +5,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { UserStoreService } from './user-store.service';
 import { DataSharingService } from './data-sharing.service';
+import { Activity } from '../Models/activity';
+import {ActivitiesService} from './activities.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,19 +15,33 @@ export class UserService {
 
   users:User[] = [];
   id!: number;
+  activities:Activity[] = [];
+  favouriteActivities!:string;
 
   private usersUrl = 'api/users';
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  constructor( private http: HttpClient, private userStore: UserStoreService, private dataSharingService: DataSharingService) { }
+  constructor( private http: HttpClient, private userStore: UserStoreService, private dataSharingService: DataSharingService, private activitiesService: ActivitiesService) { }
 
   getUsers():  Observable<User[]> {
     return this.http.get<User[]>(this.usersUrl).pipe(
       tap(_ => this.log('fetched users')),
       catchError(this.handleError<User[]>('getusers', []))
     );
+  }
+
+  getFavActivities():  void  {
+    this.activitiesService.getActivities().subscribe((activities: Activity[]) => this.activities = activities
+    );
+
+    this.activities.forEach(element => {
+      if(element.isFavourite == true){
+        this.favouriteActivities = localStorage.getItem("FavouriteActivities")! + `[${element.id}]`;
+      }
+      
+    });
   }
 
   private log(message: string) {
@@ -67,6 +83,7 @@ export class UserService {
       localStorage.setItem("UserId", `${user.id}`);
       localStorage.setItem("UserIsAdmin", `${user.isAdmin}`);
       user.isAdmin ?  this.dataSharingService.setLoginUser(1) : this.dataSharingService.setLoginUser(0)
+      this.getFavActivities()
       return resp;
     }));
   }
@@ -91,6 +108,7 @@ export class UserService {
     localStorage.setItem("User","");
     localStorage.setItem("UserId","");
     localStorage.setItem("UserIsAdmin", "");
+    localStorage.setItem("FavouriteActivities", "");
   }
 
 }
