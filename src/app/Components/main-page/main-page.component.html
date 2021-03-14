@@ -1,19 +1,67 @@
-<h1>Activities</h1>
-<div>
-    <div style="float:left; width: 50%;">
-        <h2>Activities list</h2>
-        <ul class="activities">
-            <li *ngFor="let activity of activities" (click) = "onSelect(activity)">
-                <span class="badge">{{activity.id}}</span> {{activity.name}}
-            </li>
-        </ul>
+<div class="activitiesView">
+    <div style="float:left; width: 45%; margin-left: 30px;">
+        <h2>ACTIVITIES LIST</h2>
+        <hr>
+        <table class="activities">
+            <tr>
+              <th>NAME</th>
+              <th>CATEGORY</th>
+              <th>PRICE</th>
+              <th>LANGUAGE</th>
+              <th>DATE</th>
+            </tr>
+            <tr  *ngFor="let activity of activities" (click) = "onSelect(activity)">
+                <th>{{activity.name}}</th>
+                <th>{{activity.category}}</th>
+                <th>{{activity.price}}</th>
+                <th>{{activity.language}}</th>
+                <th>{{activity.date  | date:"MM/dd/yy"}}</th>
+            </tr>
+        </table>
     </div>
-    <div *ngIf="selectedActivity" style="width: 50%;float:right;">
-        <h2>{{selectedActivity.name | uppercase}} Details</h2>
-        <div><span>id: </span>{{selectedActivity.id}}</div>
-        <div>
-        <label for="activity-name">Activity name: </label>
-        <input id="activity-name" [(ngModel)]="selectedActivity.name" placeholder="name">
+    <div style="width: 45%;float:right;  margin-right: 30px;">
+        <h2>ACTIVITIES DETAIL</h2>
+        <hr>
+        <div  class = "activityDetail" *ngIf="selectedActivity" >
+            <div  class="box">
+                <label for="activity-name">Name: </label>
+                <input id="activity-name" [(ngModel)]="selectedActivity.name" placeholder="Name" readonly class = "activityElement">
+            
+                <label for="activity-description">Description: </label>
+                <input id="activity-description" [(ngModel)]="selectedActivity.description" placeholder="Description" readonly class = "activityElement">
+            
+                <label for="activity-language">Language: </label>
+                <input id="activity-language" [(ngModel)]="selectedActivity.language" placeholder="Language" readonly class = "activityElement">
+            
+                <label for="activity-date">Date: </label>
+                <input id="activity-date" [(ngModel)]="selectedActivity.date" placeholder="Date" readonly class = "activityElement">
+                
+                <label for="activity-peopleRegistered">People registered: </label>
+                <input id="activity-peopleRegistered" [(ngModel)]="selectedActivity.peopleRegistered" placeholder="People registered" readonly class = "activityElement">
+            </div>
+            <div class="box">
+                <label for="activity-category">Category: </label>
+                <input id="activity-category" [(ngModel)]="selectedActivity.category" placeholder="Category" readonly class = "activityElement">
+
+                <label for="activity-subcategory">Subcategory: </label>
+                <input id="activity-subcategory" [(ngModel)]="selectedActivity.subcategory" placeholder="Subcategory" readonly class = "activityElement">
+
+                <label for="activity-price">Price: </label>
+                <input id="activity-price" [(ngModel)]="selectedActivity.price" placeholder="Price" readonly>
+            </div>
+            <div class="box"  *ngIf="dataSharingService.loginStatus==1 && dataSharingService.loginUser == 0">
+                <button id = "favButton"  [ngStyle]="{'color': selectedActivity.isFavourite ? 'red' : 'black'}" (click) = "isFavourite(selectedActivity)"> <i class="fa fa-heart"></i></button>
+            </div>
+            <!--
+            <span>
+                <a *ngIf="dataSharingService.loginStatus==1 && dataSharingService.loginUser == 0" routerLink="/logout" routerLinkActive="active">
+                    My Activities
+                </a>
+                <button>Sign up</button>
+                <button>Save as favourite</button>
+            </span> -->
         </div>
     </div>
 </div>
+
+

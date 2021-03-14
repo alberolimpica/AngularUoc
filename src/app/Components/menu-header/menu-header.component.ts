@@ -16,9 +16,4 @@ export class MenuHeaderComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-
-
-
-
 }

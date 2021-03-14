@@ -5,4 +5,8 @@ export class Activity {
     price!: number;
     language!: string;
     date!: Date;
+    description!: string;
+    subcategory!: string;
+    peopleRegistered!: number;
+    isFavourite!: boolean;
 }

@@ -16,8 +16,8 @@ export class InMemoryDataService implements InMemoryDbService {
     ];
 
     const activities = [      
-      { id : 1, name: "Museo Picasso", category: "Cultura y Patrimonio", price: 12, language: "ES", date:  Date.now()},
-      { id : 2, name: "Museo Tyssen", category: "Cultura y Patrimonio", price: 10, language: "ES", date:  Date.now()},
+      { id : 1, name: "Museo Picasso", category: "Cultura y Patrimonio", price: 12, language: "ES", date:  Date.now(), description: "Visita guiada", subcategory: "Museum", peopleRegistered: 13, isFavourite: false},
+      { id : 2, name: "Museo Tyssen", category: "Cultura y Patrimonio", price: 10, language: "ES", date:  Date.now(), description: "Visita guiada", subcategory: "Museum", peopleRegistered: 12, isFavourite: true},
     ];
 
     return {users, activities};

@@ -1,0 +1,43 @@
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td,
+th {
+  border: 1px solid #adf;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #adf;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+}
+
+.activityDetail {
+  display: flex;
+  justify-content: space-between;
+}
+
+.activityElement {
+  margin-bottom: 15px;
+}
+
+#favButton {
+  font-size: 24px;
+  width: auto;
+  border: none;
+  background: none;
+  padding: 10px 20px;
+  margin: 8px 0;
+}
+
+#fav {
+  color: red;
+}
