@@ -15,14 +15,6 @@ export class MenuHeaderComponent implements OnInit {
   constructor(public dataSharingService: DataSharingService) { }
 
   ngOnInit(): void {
-    if(!this.isUserLoggedIn){
-      this.userType = "NotLogged"
-      console.log("userType", this.userType)
-    }
-    else{
-      console.log("userType logged")
-      this.userType = "Logged"
-    }
   }
 
 

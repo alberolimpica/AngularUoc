@@ -10,6 +10,30 @@
         </a>
     </span>
     <span>
+        <a *ngIf="dataSharingService.loginStatus==1" routerLink="/main" routerLinkActive="active">
+            Home
+        </a>
+    </span>
+    <span>
+        <a *ngIf="dataSharingService.loginStatus==1 && dataSharingService.loginUser == 0" routerLink="/register" routerLinkActive="active">
+            Favourites
+        </a>
+    </span>
+    <span>
+        <a *ngIf="dataSharingService.loginStatus==1 && dataSharingService.loginUser == 0" routerLink="/logout" routerLinkActive="active">
+            My Activities
+        </a>
+    </span>    <span>
+        <a *ngIf="dataSharingService.loginStatus==1" routerLink="/login" routerLinkActive="active">
+            Profile
+        </a>
+    </span>
+    <span>
+        <a *ngIf="dataSharingService.loginStatus==1 && dataSharingService.loginUser == 1" routerLink="/register" routerLinkActive="active">
+            Admin
+        </a>
+    </span>
+    <span>
         <a *ngIf="dataSharingService.loginStatus==1" routerLink="/logout" routerLinkActive="active">
             Logout
         </a>

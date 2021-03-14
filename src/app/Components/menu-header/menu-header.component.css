@@ -3,6 +3,11 @@
   padding: 10px;
 }
 
+.links {
+  float: right;
+  margin: 20px;
+}
+
 .links a.active {
   background-color: grey;
 }

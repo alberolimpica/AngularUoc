@@ -66,6 +66,7 @@ export class UserService {
       localStorage.setItem("User", `${user.name}`);
       localStorage.setItem("UserId", `${user.id}`);
       localStorage.setItem("UserIsAdmin", `${user.isAdmin}`);
+      user.isAdmin ?  this.dataSharingService.setLoginUser(1) : this.dataSharingService.setLoginUser(0)
       return resp;
     }));
   }
