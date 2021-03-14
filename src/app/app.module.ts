@@ -19,6 +19,7 @@ import { ActivitiesAppInterceptorService } from './Services/activities-app-inter
 import { MainPageComponent } from './Components/main-page/main-page.component';
 import { LogoutComponent } from './Components/logout/logout.component';
 import { DataSharingService } from './Services/data-sharing.service';
+import { ProfileComponent } from './Components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { DataSharingService } from './Services/data-sharing.service';
     UserDashboardComponent,
     AdminDashboardComponent,
     MainPageComponent,
-    LogoutComponent
+    LogoutComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

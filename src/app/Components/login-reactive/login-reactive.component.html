@@ -27,7 +27,12 @@
             </div>
         </div>  
         <div>
-          <button type = "submit" placeholder="Enter Password" [disabled] = "!loginForm.valid">Login</button>
+          <div>
+            <span style = "color: red;" *ngIf="showErrorLogin"> username or/and password incorrect</span>
+          </div>
+          <div>
+            <button type = "submit" placeholder="Enter Password" [disabled] = "!loginForm.valid">Login</button>
+          </div>
         </div>  
       </div>
     </form>

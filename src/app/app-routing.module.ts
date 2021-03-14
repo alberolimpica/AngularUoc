@@ -7,6 +7,7 @@ import {AdminDashboardComponent} from './Components/admin-dashboard/admin-dashbo
 import { AuthGuard } from './guards/auth.guard';
 import { MainPageComponent } from './Components/main-page/main-page.component';
 import { LogoutComponent } from './Components/logout/logout.component';
+import { ProfileComponent } from './Components/profile/profile.component';
 
 
 const appRoutes: Routes = [ 
@@ -20,6 +21,9 @@ const appRoutes: Routes = [
   canActivate: [AuthGuard] },
   { path: 'adminDashboard', component: AdminDashboardComponent,
   canActivate: [AuthGuard] },
+  { path: 'profile', component: ProfileComponent,
+  canActivate: [AuthGuard] },
+  
   { path: '**', redirectTo: '/main' },
 ];
 

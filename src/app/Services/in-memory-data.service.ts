@@ -10,9 +10,8 @@ import { Activity } from 'src/app/Models/activity'
 export class InMemoryDataService implements InMemoryDbService {
   createDb() {
     const users = [      
-      { id : 1, name: "sara", password: "Alberola", isAdmin: true },
-      { id : 2, name: "mili", password: "brownDog", isAdmin: false },
-      { id : 3, name: "july", password: "whiteDog", isAdmin: false},
+      { id : 1, name: "sara", surname: "Alberola Mahiques", birthdate: "10/10/1991", phone: "962264724", nationality:"ES", nif: "20449369t", about: "Student, programmer and sewist", password: "Alberola", isAdmin: true, email: "sara@example.com" },
+      { id : 2, name: "mili", surname: "The Doggo", birthdate: "02/11/2008", phone: "962264724", nationality:"ES", nif: "20449369t", about: "Brown dog", password: "brownDog", isAdmin: false, email: "mili@example.com" },
     ];
 
     const activities = [      

@@ -26,3 +26,13 @@ input[type="password"] {
   border: 1px solid #ccc;
   box-sizing: border-box;
 }
+
+.box {
+  display: flex;
+  flex-direction: column;
+}
+
+.activityDetail {
+  display: flex;
+  justify-content: space-between;
+}

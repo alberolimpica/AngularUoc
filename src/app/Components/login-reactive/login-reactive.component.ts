@@ -17,6 +17,7 @@ export class LoginReactiveComponent implements OnInit {
 
   public user: User = new User();
   public userFromDB: User = new User();
+  public showErrorLogin!: boolean;
 
   users:User[] = [];
   
@@ -53,6 +54,7 @@ export class LoginReactiveComponent implements OnInit {
         if(value.password == this.user.password){
           this.isCorectUserAndPass = true;
           this.user = value;
+          this.showErrorLogin = false;
           this.login();
         }else{
           this.isCorectUserAndPass = false;
@@ -61,7 +63,7 @@ export class LoginReactiveComponent implements OnInit {
     });
 
     if(!this.isCorectUserAndPass){
-      this.messageService.add(`Username or password incorrect`);
+      this.showErrorLogin = true;
     }
 
     
